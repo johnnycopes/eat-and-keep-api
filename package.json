@@ -1,0 +1,24 @@
+{
+  "name": "eat-and-keep-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
+  },
+  "author": "John Coppola",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.5",
+    "mongoose": "^5.0.13",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "nodemon": "^1.17.3"
+  }
+}
