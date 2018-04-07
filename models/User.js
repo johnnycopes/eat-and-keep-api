@@ -16,22 +16,32 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: 'A password is required'
 	},
+	city: {
+		type: String,
+		required: false
+	},
 	restaurants: [{
 		yelpID: {
-			comment: {
-				type: String,
-				required: false
-			},
-			visited: {
-				type: Boolean,
-				required: false
-			},
-			recommended: {
-				type: Boolean,
-				required: false
-			}
+			type: String,
+			required: true
+		},
+		comment: {
+			type: String,
+			required: false
+		},
+		visited: {
+			type: Boolean,
+			required: false
+		},
+		recommended: {
+			type: Boolean,
+			required: false
 		}
-	}]
+	}],
+	created: {
+		type: Date,
+		default: Date.now()
+	}
 });
 
 module.exports = mongoose.model('User', UserSchema);
