@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: false
 	},
-	restaurants: [{
+	places: [{
 		yelpID: {
 			type: String,
 			required: true
@@ -42,7 +42,14 @@ const userSchema = new mongoose.Schema({
 	created: {
 		type: Date,
 		default: Date.now()
-	}
+	},
+	resetPasswordToken: String,
+	resetPasswordExpires: Date
+});
+
+// TODO: index yelpID in places array to make it faster to search
+userSchema.index({
+	yelpID: 'text'
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

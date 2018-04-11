@@ -33,6 +33,10 @@
   },
   "devDependencies": {
     "eslint": "^4.19.1",
-    "nodemon": "^1.17.3"
+    "html-to-text": "^4.0.0",
+    "juice": "^4.2.3",
+    "nodemailer": "^4.6.4",
+    "nodemon": "^1.17.3",
+    "pug": "^2.0.3"
   }
 }
