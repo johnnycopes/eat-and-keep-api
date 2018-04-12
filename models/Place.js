@@ -1,22 +1,38 @@
 const mongoose = require('mongoose');
 
 const placeSchema = new mongoose.Schema({
-	yelpID: {
+	yelp_id: {
 		type: String,
-		required: true
+		trim: true,
+		index: true,
+		lowercase: true,
+		required: 'A unique Yelp ID is required'
 	},
-	comment: {
-		type: String,
-		required: false
-	},
-	visited: {
-		type: Boolean,
-		required: false
-	},
-	recommended: {
-		type: Boolean,
-		required: false
-	}
+	comments: [{
+		text: String,
+		author: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'User'
+		}
+	}],
+	visits: [{
+		visited: Boolean,
+		visitor: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'User'
+		}
+	}],
+	recommendations: [{
+		recommended: Boolean,
+		reviewer: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'User'
+		}
+	}]
+});
+
+placeSchema.index({
+	yelp_id: 'text'
 });
 
 module.exports = mongoose.model('Place', placeSchema);

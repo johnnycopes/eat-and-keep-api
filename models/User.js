@@ -22,22 +22,8 @@ const userSchema = new mongoose.Schema({
 		required: false
 	},
 	places: [{
-		yelpID: {
-			type: String,
-			required: true
-		},
-		comment: {
-			type: String,
-			required: false
-		},
-		visited: {
-			type: Boolean,
-			required: false
-		},
-		recommended: {
-			type: Boolean,
-			required: false
-		}
+		type: mongoose.Schema.ObjectId,
+		ref: 'Place'
 	}],
 	created: {
 		type: Date,
@@ -45,11 +31,6 @@ const userSchema = new mongoose.Schema({
 	},
 	resetPasswordToken: String,
 	resetPasswordExpires: Date
-});
-
-// TODO: index yelpID in places array to make it faster to search
-userSchema.index({
-	yelpID: 'text'
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
