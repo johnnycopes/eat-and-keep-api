@@ -23,7 +23,6 @@ mongoose.connection.catch(err => { // if error we will be here
 // READY?! Let's go!
 // import all models
 require('./models/User');
-require('./models/Place');
 
 // Start our app!
 const app = require('./app');

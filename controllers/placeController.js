@@ -1,32 +1,40 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const Place = mongoose.model('Place');
 
 exports.getPlaces = async (req, res) => {
-	const places = await Place.find();
-	res.status(200).send(places);
+	const user = await User.findById(req.user._id);
+	res.status(200).send(user.places);
 };
 
 exports.getPlace = async (req, res) => {
-	const place = await Place.findOne({
-		$text: {
-			$search: req.params.yelp_id
-		}
+	const place = await User.findById(req.user._id,
+		{ places: { $elemMatch: { _id: req.params.id } }
 	});
-	res.status(200).send(place);
+	res.status(200).send(place.places[0]);
 };
 
 exports.addPlace = async (req, res) => {
-	const place = new Place(req.body);
-	await place.save();
-	res.status(200).send(place);
+	const place = {
+		yelp_id: req.body.yelp_id,
+		comment: req.body.comment,
+		visited: req.body.visited,
+		recommended: req.body.recommended
+	};
+	const user = await User.findByIdAndUpdate(req.user._id,
+		{ $push: { places: place } },
+		{ 'new': true, 'upsert': true }
+	);
+	res.status(200).send(user.places);
 };
 
-exports.deletePlace = async (req, res) => {
-	await Place.findOneAndRemove({
-		$text: {
-			$search: req.params.yelp_id
-		}
-	});
-	res.status(200).send(`Place with Yelp ID "${req.params.yelp_id}" has been deleted`);
+exports.updatePlace = async (req, res) => {
+	// coming soon
+};
+
+exports.removePlace = async (req, res) => {
+	const place = await User.findByIdAndUpdate(req.user._id,
+		{ $pull: { places: { _id: req.params.id } } },
+		{ 'safe': true }
+	);
+	res.status(200).send(`Place with ID ${req.params.id} successfully deleted`);
 };

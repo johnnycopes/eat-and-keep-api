@@ -22,8 +22,21 @@ const userSchema = new mongoose.Schema({
 		required: false
 	},
 	places: [{
-		type: mongoose.Schema.ObjectId,
-		ref: 'Place'
+		yelp_id: {
+			type: String,
+			trim: true,
+			lowercase: true,
+			required: 'A Yelp ID is required'
+		},
+		comment: {
+			type: String
+		},
+		visited: {
+			type: Boolean
+		},
+		recommended: {
+			type: Boolean
+		}
 	}],
 	created: {
 		type: Date,

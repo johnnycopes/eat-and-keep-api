@@ -1,19 +1,18 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-const apiController = require('../controllers/apiController');
-const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
 const placeController = require('../controllers/placeController');
-const commentController = require('../controllers/commentController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/api/users', authController.isLoggedIn, catchErrors(apiController.getUsers));
-router.get('/api/users/:id', catchErrors(apiController.getUser));
-router.post('/api/users', catchErrors(apiController.createUser));
-router.post('/api/users/:id', catchErrors(apiController.updateUser));
-router.delete('/api/users/:id', catchErrors(apiController.deleteUser));
+// PLACES
 
+router.get('/api/places', authController.isLoggedIn, catchErrors(placeController.getPlaces));
+router.get('/api/places/:id', authController.isLoggedIn, catchErrors(placeController.getPlace));
+router.post('/api/places', authController.isLoggedIn, catchErrors(placeController.addPlace));
+router.post('/api/places/:id', authController.isLoggedIn, catchErrors(placeController.updatePlace));
+router.delete('/api/places/:id', authController.isLoggedIn, catchErrors(placeController.removePlace));
 
 // REGISTER
 
@@ -32,7 +31,6 @@ router.post('/api/login',
 );
 router.get('/api/logout', authController.logout);
 
-
 // USER ACCOUNT
 /* 
 	this route might not be needed because the front-end will control access to the page
@@ -45,18 +43,5 @@ router.post('/api/account/reset/:token',
 	authController.confirmedPasswords, // check that the passwords are the same
 	catchErrors(authController.update) // finally, update their password
 );
-
-
-// PLACES
-
-router.get('/api/places', catchErrors(placeController.getPlaces));
-router.get('/api/places/:yelp_id', catchErrors(placeController.getPlace));
-router.post('/api/places', catchErrors(placeController.addPlace));
-router.delete('/api/places/:yelp_id', catchErrors(placeController.deletePlace));
-
-
-// COMMENTS
-
-router.post('/api/comments', catchErrors(commentController.addComment));
 
 module.exports = router;
