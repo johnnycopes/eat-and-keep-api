@@ -47,7 +47,7 @@ exports.updatePlace = async (req, res) => {
 			context: 'query' // required for Mongoose to perform the query properly
 		}
 	);
-	res.status(200).send(user);
+	res.status(200).send(user.places);
 };
 
 exports.removePlace = async (req, res) => {
