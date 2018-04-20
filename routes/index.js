@@ -6,6 +6,11 @@ const userController = require('../controllers/userController');
 const placeController = require('../controllers/placeController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
+// TEST ROUTE (make sure server is up and running)
+
+router.get('/api/test', (req, res) => res.status(200).json('it works!'));
+
+
 // REGISTER
 
 router.post('/api/register',
@@ -14,6 +19,7 @@ router.post('/api/register',
 	passport.authenticate('local'),
 	(req, res) => res.status(200).send('User successfully created')
 );
+
 
 // LOGIN / LOGOUT
 
