@@ -17,7 +17,7 @@ router.post('/api/register',
 	userController.validateRegister,
 	catchErrors(userController.register),
 	passport.authenticate('local'),
-	(req, res) => res.status(200).send('User successfully created')
+	(req, res) => res.status(200).json(req.user)
 );
 
 
@@ -25,7 +25,7 @@ router.post('/api/register',
 
 router.post('/api/login',
 	passport.authenticate('local'),
-	(req, res) => res.status(200).send('User is now logged in')
+	(req, res) => res.status(200).json(req.user)
 );
 router.get('/api/logout', authController.logout);
 

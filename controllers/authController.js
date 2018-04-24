@@ -13,7 +13,7 @@ const mail = require('../handlers/mail');
 
 exports.logout = (req, res) => {
 	req.logout();
-	res.status(200).send('User is now logged out');
+	res.status(200).json('User is now logged out');
 };
 
 exports.isLoggedIn = (req, res, next) => {
@@ -21,14 +21,14 @@ exports.isLoggedIn = (req, res, next) => {
 		next();
 		return;
 	}
-	res.status(401).send('User is not logged in');
+	res.status(401).json('User is not logged in');
 };
 
 exports.forgot = async (req, res) => {
 	// 1. see if user email exists
 	const user = await User.findOne({ email: req.body.email });
 	if (!user) {
-		res.status(400).send('Email does not exist');
+		res.status(400).json('Email does not exist');
 	}
 	// 2. set reset tokens and expiry on their account
 	user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
